@@ -41,6 +41,32 @@ Detta är definitivt inte alltid fallet.
 då är det lätt att ta reda på dessa om de ändras i uppgiften,
 ex 2^33 = 8GB, 2^31 = 2GB och 2^13 = 8kB, 2^11 = 2kB.
 
-## Tags & Lines
+## Tags
+De nästa tre talen är relativt straight forward,
+de påverkas endast av lines (röd) och den virtuell 
+page vi räknade ut tidigare.
 
+![image](./images/TagsLines.png)
 
+Först får vi reda på hur många lines vi har vilket innebär att vi har
+så många lines som behöver jämföras. 
+Därav är antalet lines = antalet Comparisons.
+Så det hämtar vi bara från frågan vilket är 16 i detta fall.
+
+Det andra numret kan vi som tur är också bara hämta.
+Bredden av en line kommer direkt från bredden av virtual page number.
+Den har vi redan räknat ut till 20 bitar, det viktiga är att vi kommer ihåg
+att det är *virtual* page number och inte *physical* page number.
+
+Det sista numret är nu lätt att räkna ut. Det är helt enkelt bara
+_comparators_ * _lines_. I detta fall är det 16 x 20 = 320 bitar.
+
+Vi kan nu fylla i de tre talen i frågan.
+* Comparators = lines = 16
+* Line width = virtual page number = 20 bitar
+* Tag width = comparators x line width = 16 x 20 = 320 bitar
+
+![image](./images/TagsLines.png)
+![image](./images/TagsExtendedInput.png)
+
+## Lines

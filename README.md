@@ -1,11 +1,14 @@
 # Virtual Memory and Cache
 
-Disclaimer: Det här systemet är inte perfekt, 
+### Disclaimer
+Det här systemet är inte perfekt,
 jag vet inte om all logik stämmer till 100%, men det
 här är hur jag tänkte på uppgiften och det fungerade för mig.
 Om man klarar den här uppgiften så behöver man bara skrapa ihop
 15 poäng till för att klara tentan. 
 Denna metod garanterar de flesta poängen på uppgiften iallafall
+
+**Skicka feedback och frågor till mig om något är oklart eller fel.**
 
 ## Översikt
 

@@ -1,5 +1,12 @@
 # Virtual Memory and Cache
 
+Disclaimer: Det här systemet är inte perfekt, 
+jag vet inte om all logik stämmer till 100%, men det
+här är hur jag tänkte på uppgiften och det fungerade för mig.
+Om man klarar den här uppgiften så behöver man bara skrapa ihop
+15 poäng till för att klara tentan. 
+Denna metod garanterar de flesta poängen på uppgiften iallafall
+
 ## Översikt
 
 Så det här är alla tal som kan ändras i Uppgiften, 
@@ -31,8 +38,8 @@ Notera att vi har lite tur att både virtuellt och fysiskt minne är 32 bitar
 vilket ger oss samma page number för båda.
 Detta är definitivt inte alltid fallet.
 * Offset = 12 bitar
-* Virtual page number = virtuellt minne - page offset = 32 - 12 = 20 bitar
-* Physical page number = fysiskt minne - page offset = 32 - 12 = 20 bitar
+* Virtual page number = virtuell adress - page offset = 32 - 12 = 20 bitar
+* Physical page number = fysisk adress - page offset = 32 - 12 = 20 bitar
 
 ![image](./images/First3.png)
 ![image](./images/First3Input.png)
@@ -114,5 +121,78 @@ Vi kan nu fylla i de tre talen i frågan.
 ![image](./images/Lines.png)
 ![image](./images/LinesInput.png)
 
-## Direct Mapped Cache
+## Direct Mapped & Set Associative Cache
+
+Den här delen av uppgiften är honestly rätt flummig. 
+Det finns system för att räkna ut allt men jag föredrar och rekommenderar
+att bara memorera vad det kan vara och utgå från det istället. 
+Jag kan också alldeles för lite om hur man systematiskt räknar ut det.
+Så det får bli memorering vilket fungerade för mig, 
+men denna del av uppgiften är definitivt den svåraste.
+
+### Direct Mapped Cache
+
+![image](./images/DirectMapped.png)
+
+Jag tycker vi börjar med de lättaste talen.
+
+Antalet comparators verkar alltid vara 1 och bredden av en comparator verkar 
+alltid vara 16 bitar.
+![image](./images/Comparators.png)
+
+Från detta kan vi nu räkna ut resten.
+Kom ihåg hur stor vår fysiska adress är som vi räknade ut förut, 
+2^x, i detta fall 2^32 = 32 bitar.
+Eftersom bitar är nollindexerade så är det 31..0 vi följer.
+Då är det första talet 31..16 eftersom vi har 16 bitar i en comparator.
+Sedan, eftersom vi redan konstaterat att line offset är 5 bitar, 4..0.
+Så vet vi att det sista talet är 15..5.
+![image](./images/Adress_bits.png)
+
+Nu är det endast storleken på vårat memory kvar.
+För att räkna ut detta måste vi kika tillbaka på hur många lines vi har.
+Från förra delen av uppgiften vet vi att vi har 2k lines:
+![image](./images/Lines2.png)
+
+Vi vet nu också att bredden av en comparator alltid är 16 bitar.
+Så vi multiplicerar bara dessa två tal för att få storleken på vårat minne.
+2k * 16 = 32k bitar minne.
+![image](./images/CacheMemory.png)
+
+Nu kan vi fylla i alla tal.
+* Adress bits
+  * 31..16 (16 bitar lång, alltid)
+  * 15..5 (resten av adressen)
+  * 4..0 (5 bitar lång, alltid)
+* Cache memory = lines * comparator width = 2k * 16 = 32k bitar
+* Comparators = 1
+* Comparator width = 16 bitar
+![image](./images/DirectMappedInput.png)
+![image](./images/DirectMappedInput2.png)
+
+### Set Associative Cache
+
+Här är det lite mindre tal att hålla reda på, och det är bara
+ett av talen vi behöver ens räkna ut, resten är bara att memorera.
+![image](./images/Associative.png)
+
+Vår fysiska adress är fortfarande 32 bitar, 2^32 = 4GB.
+Därmed, eftersom bitar är nollindexerade, är det fortfarande 31..0 vi följer.
+
+Första talet är därför 31.
+
+Resterande tal är bara att komma ihåg. 13, 12 och 5.
+Varför? Jo på set associative cache är det alltid x..13 för första intervallen.
+Därmed, eftersom line offset alltid är 5 bitar, 4..0, så måste det sista talet alltid vara 12.
+Så dessa kommer som jag förstått det, alltid vara samma. 
+Det enda som ändras är den högsta biten som beroende på hur stor fysisk adressen är.
+
+Vi kan nu fylla i alla tal.
+* Adress bits
+  * 31
+  * 13
+  * 12
+  * 5
+
+![image](./images/AssociativeInput.png)
 
